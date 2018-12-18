@@ -3,6 +3,8 @@ Based on an event in episode 101 of the DND Show Dice Camera Action, you fight e
 
 Currenly only text based and written in java. Scripts included to run the jar on Mac/Windows/Linux. 
 
+Zip file is all you need to run the game.
+
 Requires Java (from https://www.java.com/en/download/) to run.
 
 Strix with Chair Richten starts with 90HP, but is a smaller target.
