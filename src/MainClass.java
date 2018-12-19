@@ -4,17 +4,34 @@ import java.util.Scanner;
 
 public class MainClass
 {
-	private final static int strahdHPMax = 120;
+	private final static int strahdHPMax = 110;
 	private final static int richtenHPMax = 90;
 	private static Random rand = new Random();
 	private static int strahdHP;
 	private static int richtenHP;
 	private static int order; // strix 1/paultin 2
+	private static Scanner in = new Scanner(System.in);
 
 	public static void main(String[] args)
 	{
-		start();
+		String person;
+		do
+		{
+			System.out.println("Choose Your Fighter! \n Strix with Chair Richten: smaller target, but less HP \n "
+					+ "Paultin with Strahd Von Chairovich: bigger target, but more HP \n Enter Exit to quit");
+			System.out.print("Fighter Name: ");
+			strahdHP = strahdHPMax;
+			richtenHP = richtenHPMax;
+			person = in.nextLine();
+			if (!person.equalsIgnoreCase("Exit"))
+			{
+				start(person);
+			}
+		} while (!person.equalsIgnoreCase("Exit"));
+
+		in.close();
 	}
+
 	public static void fightStrix()
 	{
 		int turnNumber = 0;
@@ -35,21 +52,20 @@ public class MainClass
 			order = 2;
 		}
 		System.out.println("Time for battle!");
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		while (strahdHP >= 1 && richtenHP >= 1)
 		{
 			int selection = 3;
 			turnNumber++;
-			System.out.println("Strahd Von Charovich: " + strahdHP + "/" + strahdHPMax + "\nChair Richten: "
-					+ richtenHP + "/" + richtenHPMax);
+			System.out.println("Strahd Von Charovich: " + strahdHP + "/" + strahdHPMax + "\nChair Richten: " + richtenHP
+					+ "/" + richtenHPMax);
 			System.out.println("What will Strix do?" + "\n 1:Chair Kick! Power 20, Accuracy 90"
 					+ "\n 2:Chair Punch! Power 40 Accuracy 70 " + "\n 3:Panic! Strix gives up a turn due to panicking");
 			System.out.print("Selection Number: ");
-			try 
+			try
 			{
-				 selection = in.nextInt();
-			}
-			catch(InputMismatchException ex)
+				selection = in.nextInt();
+			} catch (InputMismatchException ex)
 			{
 				System.out.println("Incorrect Input\n");
 				in.nextLine();
@@ -80,12 +96,11 @@ public class MainClass
 				}
 				break;
 			case 3:
-				if(order == 1)
+				if (order == 1)
 				{
 					strixPanic();
 					aiAttack("Paultin");
-				}
-				else
+				} else
 				{
 					aiAttack("Paultin");
 					strixPanic();
@@ -101,12 +116,13 @@ public class MainClass
 		if (strahdHP < 0)
 		{
 			System.out.println("Strahd Von Chairovich falls to the ground in pieces \n Paultin:Nooo, my chair!");
+			sleep(1);
 		} else
 		{
 			System.out.println(
 					"Chair Richten falls to the ground in pieces \n Strix: Nooo! We were going to go to the big leagues!");
+			sleep(1);
 		}
-		in.close();
 	}
 
 	public static void fightPaultin()
@@ -130,7 +146,7 @@ public class MainClass
 		}
 		sleep(1);
 		System.out.println("Time for battle!");
-		Scanner in = new Scanner(System.in);
+		//Scanner in = new Scanner(System.in);
 		while (strahdHP >= 0 && richtenHP >= 0)
 		{
 			turnNumber++;
@@ -140,11 +156,10 @@ public class MainClass
 					+ "\n 2:Chair Slam! Power 40 Accuracy 60 "
 					+ "\n 3:I need a drink. Paultin leaves and gets himself a drink for a turn.");
 			System.out.print("Selection Number: ");
-			try 
+			try
 			{
-				 selection = in.nextInt();
-			}
-			catch(InputMismatchException ex)
+				selection = in.nextInt();
+			} catch (InputMismatchException ex)
 			{
 				System.out.println("Incorrect Input\n");
 				in.nextLine();
@@ -175,12 +190,11 @@ public class MainClass
 				}
 				break;
 			case 3:
-				if(order == 2)
+				if (order == 2)
 				{
 					paultinDrink();
 					aiAttack("Strix");
-				}
-				else
+				} else
 				{
 					aiAttack("Strix");
 					paultinDrink();
@@ -195,12 +209,11 @@ public class MainClass
 		}
 		winner();
 
-		in.close();
 	}
 
 	public static void aiAttack(String person)
 	{
-		int aiSelection = rand.nextInt(5)+1;
+		int aiSelection = rand.nextInt(5) + 1;
 		if (aiSelection == 1 || aiSelection == 2)
 		{
 			if (person.equals("Strix"))
@@ -334,24 +347,18 @@ public class MainClass
 	{
 		if (strahdHP < 0)
 		{
-			System.out.println("Strahd Von Chairovich falls to the ground in pieces \n Paultin:Nooo, my beautiful chair!");
+			System.out.println(
+					"Strahd Von Chairovich falls to the ground in pieces \n Paultin:Nooo, my beautiful chair!");
 		} else
 		{
 			System.out.println(
 					"Chair Richten falls to the ground in pieces \n Strix: Nooo, We were going to go to the big leagues!");
 		}
-		
-		
+
 	}
-	static void start()
+
+	static void start(String person)
 	{
-		System.out.println("Choose Your Fighter! \n Strix with Chair Richten: smaller target, but less HP \n "
-				+ "Paultin with Strahd Von Chairovich: bigger target, but more HP");
-		System.out.print("Fighter Name: ");
-		strahdHP = strahdHPMax;
-		richtenHP = richtenHPMax;
-		Scanner start = new Scanner(System.in);
-		String person = start.nextLine();
 		if (person.equalsIgnoreCase("Strix"))
 		{
 			fightStrix();
@@ -359,7 +366,6 @@ public class MainClass
 		{
 			fightPaultin();
 		}
-		start.close();
 	}
 
 }
